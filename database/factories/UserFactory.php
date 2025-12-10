@@ -27,6 +27,7 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'cpf' => $this->faker->unique()->numerify('###########'),
+            'profile_id' => 1,
         ];
     }
 

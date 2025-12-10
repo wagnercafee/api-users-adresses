@@ -28,18 +28,23 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        try {
-            $user = new User();
-            $user->fill($data);
+        // separa os ids de addresses (se vierem)
+        $addressIds = $data['addresses'] ?? [];
+        unset($data['addresses']);
 
-            $user->save();
+        // cria o usuário
+        $user = new User();
+        $user->fill($data);
+        $user->save();
 
-            return response()->json($user, 201);
-        } catch (\Exception $ex) {
-            return response()->json([
-                'message' => 'Falha ao inserir usuario!'
-            ], 400);
+        if (!empty($addressIds)) {
+            $user->addresses()->sync($addressIds);
         }
+
+        return response()->json(
+            new UserResource($user->load(['profile', 'addresses'])),
+            201
+        );
     }
 
     /**
@@ -74,10 +79,22 @@ class UserController extends Controller
         $data = $request->validated();
 
         try {
-            $user = User::findOrFail($id);
-            $user->update($data);
+            $user->update([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'cpf' => $data['cpf'],
+                'profile_id' => $data['profile_id'] ?? $user->profile_id,
+            ]);
 
-            return response()->json($user, 200);
+            if (isset($data['addresses'])) {
+                $user->addresses()->sync($data['addresses']);
+            }
+
+            $user->load(['profile', 'addresses']);
+
+            return response()->json([
+                'data' => $user,
+            ], 200);
         } catch (\Exception $ex) {
             return response()->json([
                 'message' => 'Falha ao atualizar o usuario!'

@@ -25,6 +25,11 @@ class StoreUserRequest extends FormRequest
             'name'  => ['required'],
             'email' => ['required', 'email', 'unique:users,email'],
             'cpf'   => ['required', 'unique:users,cpf'],
+            'profile_id' => ['required', 'integer', 'exists:profiles,id'],
+
+            // addresses opcional
+            'addresses'   => ['nullable', 'array'],
+            'addresses.*' => ['integer', 'exists:addresses,id'],
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AddressResource;
 use App\Models\Address;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class AddressController extends Controller
      */
     public function index()
     {
-        return Address::all();
+        return AddressResource::collection(Address::all());
     }
 
     /**
@@ -35,7 +36,7 @@ class AddressController extends Controller
      */
     public function show(Address $address)
     {
-        return $address;
+        return new AddressResource($address);
     }
 
     /**

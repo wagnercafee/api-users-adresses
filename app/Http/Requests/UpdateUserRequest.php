@@ -35,6 +35,9 @@ class UpdateUserRequest extends FormRequest
                 'required',
                 Rule::unique('users', 'cpf')->ignore($userId),
             ],
+            'profile_id' => 'required|exists:profiles,id',
+            'addresses' => 'array',
+            'addresses.*' => 'exists:addresses,id',
         ];
     }
 }

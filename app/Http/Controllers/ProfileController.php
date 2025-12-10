@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProfileResource;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        return Profile::all();
+        return ProfileResource::collection(Profile::all());
     }
 
     public function store(Request $request)
@@ -25,7 +26,7 @@ class ProfileController extends Controller
 
     public function show(Profile $profile)
     {
-        return $profile;
+        return new ProfileResource($profile);
     }
 
     public function update(Request $request, Profile $profile)
@@ -41,6 +42,13 @@ class ProfileController extends Controller
 
     public function destroy(Profile $profile)
     {
+        // Bloqueia exclusão do perfil Administrador (por id ou por nome)
+        if ($profile->id === 1 || $profile->name === 'Administrador') {
+            return response()->json([
+                'message' => 'Nao é permitido excluir o perfil Administrador.',
+            ], 403);
+        }
+
         $profile->delete();
 
         return response()->json(null, 204);

@@ -13,13 +13,6 @@ return new class extends Migration
             $table->string('name');
             $table->timestamps();
         });
-
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('profile_id')
-                  ->nullable()
-                  ->constrained('profiles')
-                  ->nullOnDelete();
-        });
     }
 
     public function down(): void
