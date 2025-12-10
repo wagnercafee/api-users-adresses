@@ -18,22 +18,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // cria perfis
+        // cria perfil default
         Profile::updateOrCreate(
             ['id' => 1],
             ['name' => 'Administrador']
         );
 
-        Profile::insert([
-            ['name' => 'Gerente',       'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Usuário',       'created_at' => now(), 'updated_at' => now()],
-        ]);
-
         // cria 8 usuários
-        $users = User::factory(8)->create();
+        $users = User::factory(0)->create();
 
         // cria 5 endereços
-        $addresses = Address::factory(5)->create();
+        $addresses = Address::factory(0)->create();
 
         // liga aleatoriamente usuários e endereços (N:N)
         $users->each(function (User $user) use ($addresses) {

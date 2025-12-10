@@ -23,11 +23,15 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $created = $this->faker->dateTimeBetween('-6 months', 'now');
+
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'cpf' => $this->faker->unique()->numerify('###########'),
             'profile_id' => 1,
+            'created_at' => $created,
+            'updated_at' => $created,
         ];
     }
 
