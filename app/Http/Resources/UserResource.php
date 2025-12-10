@@ -19,9 +19,21 @@ class UserResource extends JsonResource
             'nome' => $this->name,
             'email' => $this->email,
             'cpf' => $this->cpf,
-            // 'perfil' => $this->type,
-            // 'data_cadastro' => $this->created_at,
-            // 'enderecos' => AddressResource::collection($this->whenLoaded('addresses')),
+            'perfil'  => $this->whenLoaded('profile', function () {
+                return [
+                    'id'   => $this->profile->id,
+                    'name' => $this->profile->name,
+                ];
+            }),
+            'enderecos' => $this->whenLoaded('addresses', function () {
+                return $this->addresses->map(function ($address) {
+                    return [
+                        'id'   => $address->id,
+                        'street' => $address->street,
+                        'cep'  => $address->cep,
+                    ];
+                });
+            }),
         ];
     }
 }

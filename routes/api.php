@@ -1,7 +1,18 @@
 <?php
 
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/users', [UserController::class, 'index']);
 Route::apiResource('users', UserController::class);
+
+Route::apiResource('addresses', AddressController::class);
+
+Route::apiResource('profiles', ProfileController::class);
+
+Route::post('/users/{user}/addresses', [UserAddressController::class, 'store']);
+
+Route::put('/users/{user}/profile', [UserProfileController::class, 'update']);

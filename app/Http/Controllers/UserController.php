@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::with(['profile', 'addresses'])->get();
         return UserResource::collection($users);
     }
 
@@ -48,8 +48,8 @@ class UserController extends Controller
     public function show(string $id)
     {
         try {
-            $user = User::findOrFail($id);
-            return response()->json($user, 200);
+            $user = User::with(['profile', 'addresses'])->findOrFail($id);
+            return new UserResource($user);
         } catch (\Exception $ex) {
             return response()->json([
                 'message' => 'Falha ao buscar usuario!'
