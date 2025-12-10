@@ -31,7 +31,7 @@ class UserController extends Controller
         try {
             $user = new User();
             $user->fill($data);
-            $user->password = Hash::make(123);
+
             $user->save();
 
             return response()->json($user, 201);
