@@ -33,6 +33,7 @@ class UpdateUserRequest extends FormRequest
             ],
             'cpf'   => [
                 'required',
+                'digits:11',
                 Rule::unique('users', 'cpf')->ignore($userId),
             ],
             'profile_id' => 'required|exists:profiles,id',

@@ -24,11 +24,11 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Administrador']
         );
 
-        // cria 8 usuários
-        $users = User::factory(0)->create();
+        // cria 5 usuários
+        $users = User::factory(5)->create();
 
-        // cria 5 endereços
-        $addresses = Address::factory(0)->create();
+        // cria 3 endereços
+        $addresses = Address::factory(3)->create();
 
         // liga aleatoriamente usuários e endereços (N:N)
         $users->each(function (User $user) use ($addresses) {

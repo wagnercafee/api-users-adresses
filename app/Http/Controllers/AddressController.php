@@ -22,8 +22,10 @@ class AddressController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'street' => ['required', 'string'],
-            'cep'  => ['required', 'string'],
+            'street' => ['required', 'string', 'max:255'],
+            'cep' => ['required', 'digits:8'],
+        ], [
+            'cep.digits' => 'O CEP deve conter exatamente 8 números.',
         ]);
 
         $address = Address::create($data);
@@ -46,7 +48,7 @@ class AddressController extends Controller
     {
         $data = $request->validate([
             'street' => ['sometimes', 'required', 'string'],
-            'cep'  => ['sometimes', 'required', 'string'],
+            'cep'  => ['sometimes', 'required', 'digits:8'],
         ]);
 
         $address->update($data);

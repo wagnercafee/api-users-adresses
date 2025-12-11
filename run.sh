@@ -5,6 +5,8 @@ cp .env.example .env
 
 php artisan key:generate
 
+rm database/database.sqlite
+
 touch database/database.sqlite
 
 composer install
