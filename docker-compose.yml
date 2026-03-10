@@ -1,0 +1,12 @@
+services:
+  api:
+    build: .
+    ports:
+      - "9000:9000"
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_URL=http://localhost:9000
+      - SESSION_DRIVER=file
+      - CACHE_STORE=file
+      - QUEUE_CONNECTION=sync
