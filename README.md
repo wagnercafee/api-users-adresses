@@ -28,6 +28,11 @@ $ `git clone https://github.com/wagnercafee/api-users-adresses.git `
 
 $ `cd api-users-adresses `
 
+Para rodar em docker
+$ docker compose up --build
+
+ou
+
 $ `bash run.sh` 
 
 ## 🔧 O que o  `run.sh`  faz
